@@ -1,0 +1,47 @@
+.expandable-card__group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.expandable-card__main {
+  color: black;
+  background-color: var(--blue200);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 15px;
+  height: 250px;
+  width: 200px;
+  padding: 0px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.expandable-card__main > h6 {
+  margin: 0px;
+  padding: 0px;
+  width: 198px;
+  color: blueviolet;
+}
+
+.expandable-card__clicked {
+  color: black;
+  background-color: var(--blue200);
+  height: 350px;
+  width: 300px;
+  padding: 0px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  border-radius: 15px;
+  position: "fixed";
+  top: 30%;
+  left: 40%;
+}
+
+/* https://getcssscan.com/css-box-shadow-examples */
