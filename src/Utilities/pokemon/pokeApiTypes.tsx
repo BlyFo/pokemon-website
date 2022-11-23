@@ -14,6 +14,14 @@ export interface SpriteType {
     front_shiny_female: string | null
 }
 
+export interface FullSpriteType extends SpriteType {
+    other : {
+        dream_world: SpriteType | null,
+        home: SpriteType | null,
+        "official-artwork": SpriteType,
+    };
+}
+
 export interface GeneartionType {
     id: number;
     name: string;
@@ -72,7 +80,7 @@ export interface FullPokemonType {
     location_area_encounters: string;
     moves: Array<any>;
     species: BasicInfo;
-    sprites: SpriteType;
+    sprites: FullSpriteType;
     other: object;
     versions: object;
     stats: Array<any>;

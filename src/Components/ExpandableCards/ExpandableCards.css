@@ -5,6 +5,7 @@
 }
 
 .expandable-card__main {
+  position: relative;
   color: black;
   background-color: var(--blue200);
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -15,18 +16,30 @@
   margin: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
 }
-.expandable-card__main > h6 {
+.expandable-card__main > h6,
+.expandable-card__clicked > h6 {
   margin: 0px;
   padding: 0px;
   width: 198px;
   color: blueviolet;
 }
 
+.expandable-card__main > img,
+.expandable-card__clicked > img {
+  position: absolute;
+  top: calc(50% - 100px);
+  height: 200px;
+  width: 200px;
+  /*border: 1px solid red;*/
+  z-index: 0;
+}
+
 .expandable-card__clicked {
   color: black;
+  position: relative;
   background-color: var(--blue200);
   height: 350px;
   width: 300px;

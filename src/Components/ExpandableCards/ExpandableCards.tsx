@@ -1,16 +1,16 @@
 import './ExpandableCards.css';
 import { PokemonType } from '../../Utilities/pokemon/pokemonInfo';
 import React from 'react';
-import { PokemonSpeciesType } from '../../Utilities/pokemon/pokeApiTypes';
+import { FullPokemonType, PokemonSpeciesType } from '../../Utilities/pokemon/pokeApiTypes';
 import { LayoutGroup, motion, AnimatePresence } from "framer-motion"
 
 interface Props {
-  data: Array<PokemonSpeciesType>;
+  data: Array<FullPokemonType>;
 }
 
 function ExpandableCards (props:Props) {
     
-  const [selectedPokemon,setSelectedPokemeon] = React.useState<PokemonSpeciesType | null>(null)
+  const [selectedPokemon,setSelectedPokemeon] = React.useState<FullPokemonType | null>(null)
 
   const variants = {
     visible: {
@@ -32,25 +32,24 @@ function ExpandableCards (props:Props) {
           key={pokemon.name}
           layoutId={pokemon.name}
           className='expandable-card__main'
-          onClick={ () => setSelectedPokemeon(pokemon)}>
-            <motion.div>
-            <h6>{pokemon.name ? pokemon.name : "< Pokemon Name >"}</h6>
-            <div>{"< Sprite >"}</div>
+          onClick={ () => {setSelectedPokemeon(pokemon); console.log(pokemon.sprites.other?.['official-artwork'].front_default)}}>
+            <motion.h6 layoutId={pokemon.name+" title"} >{pokemon.name + "♀"}</motion.h6>
+            {pokemon.sprites.other?.['official-artwork']?.front_default && <motion.img src={pokemon.sprites.other?.['official-artwork'].front_default} />}
             <div>{"< Type >"} </div>
             <div>{ pokemon.id ? pokemon.id : "< # >"} </div>
-            </motion.div>
           </motion.li>
         ))}
       </ul>
       <AnimatePresence>
       {selectedPokemon && (
         <motion.div
+        transition={{ duration: 2 }}
         className="expandable-card__clicked"
         style={{position: "fixed", top: "30%",left: "40%"}}
         layoutId={selectedPokemon.name}
         onClick={() => setSelectedPokemeon(null)}>
-      <h1 className="card-title"> {selectedPokemon.name}</h1>
-      <h1 className="card-title"> {selectedPokemon.flavor_text_entries[0].flavor_text}</h1>
+      <motion.h6 layoutId={selectedPokemon.name+" title"} transition={{ duration: 2 }}> {selectedPokemon.name}</motion.h6>
+      <motion.h6> {selectedPokemon.name}</motion.h6>
       </motion.div>
       )}
       </AnimatePresence>
