@@ -65,6 +65,11 @@ export interface PokemonSpeciesType {
     varieties: Array<{is_default: boolean, pokemon: BasicInfo}>
 }
 
+export interface PokemonTypes {
+    slot:number;
+    type:BasicInfo;
+}
+
 export interface FullPokemonType {
     id: number;
     name: string;
@@ -84,6 +89,6 @@ export interface FullPokemonType {
     other: object;
     versions: object;
     stats: Array<any>;
-    types: Array<any>;
+    types: Array<PokemonTypes>;
     past_types: Array<any>;
 }

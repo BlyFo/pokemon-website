@@ -1,38 +1,70 @@
 .App {
   text-align: center;
+  background-color: black;
+  height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.logo {
+  position: absolute;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  z-index: 10;
+}
+.logo__glow {
+  position: absolute;
+  top: 150px;
+  left: 150px;
+  border-radius: 50%;
+  box-shadow: 0 0 60px 30px rgba(255, 255, 255, 0.5),
+    0 0 150px 125px rgb(141, 40, 74), inset 350px 0 380px #f0f;
+  transform: scale(1.1);
+  height: 0px;
+  width: 0px;
+}
+.logo__glow::after {
+  position: absolute;
+  content: "";
+  top: -300px;
+  left: -300px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffffffb2;
+  filter: blur(18px);
+  height: 600px;
+  width: 600px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.logo__container {
+  position: relative;
+  height: 300px;
+  width: 300px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header {
+  height: 500px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-around;
+  margin-bottom: 50px;
+}
+.header-description {
   color: white;
+  border: 1px solid blue;
+  width: fit-content;
+  height: fit-content;
 }
 
-.App-link {
-  color: #61dafb;
+.nav-bar {
+  position: absolute;
+  border: 1px solid red;
+  height: 50px;
+  width: 100%;
+  display: grid;
+  top: 500px;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-areas: ". button button button button .";
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* https://github.com/duiker101/pokemon-type-svg-icons */

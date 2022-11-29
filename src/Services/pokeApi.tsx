@@ -45,25 +45,4 @@ export default class PokeApi {
     )
     return fullList.sort((a,b) => a.order - b.order)
   }
-  /*
-  static async getPokeListByRegion(generationNumber:number){
-    const res = await axios.get(BASE_URL+"generation/"+generationNumber)
-    return res.data as GeneartionType;
-  }
-
-  static async getFullPokemonInfoByRegion(pokemon:BasicInfo){
-    const res = await axios.get(pokemon.url)
-    return res.data as PokemonSpeciesType;
-  }
-
-  static async getFullPokemonsInfoByRegion(pokemons:Array<BasicInfo>){
-    let fullList:Array<PokemonSpeciesType> = await Promise.all(
-      pokemons.map(async (pokemon) => {
-        const res = await axios.get(pokemon.url);
-        return await res.data as PokemonSpeciesType;
-      })
-    )
-    return fullList.sort((a,b) => a.order - b.order)
-  }
-  */
 }
