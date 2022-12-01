@@ -1,33 +1,20 @@
 import './ExpandableCards.css';
-import { PokemonType } from '../../Utilities/pokemon/pokemonInfo';
 import React from 'react';
-import { FullPokemonType, PokemonTypes } from '../../Utilities/pokemon/pokeApiTypes';
+import { CustomPokemonType, FullPokemonType, PokemonTypes } from '../../Utilities/pokemon/pokeApiTypes';
 import { LayoutGroup, motion, AnimatePresence } from "framer-motion"
 
 interface Props {
-  data: Array<FullPokemonType>;
+  data: Array<CustomPokemonType>;
 }
 
 function ExpandableCards (props:Props) {
     
-  const [selectedPokemon,setSelectedPokemeon] = React.useState<FullPokemonType | null>(null)
-
-  const variants = {
-    visible: {
-      scale: 1.1,
-      boxShadow: "10px 10px 0 rgba(0, 0, 0, 0.2)",
-      y: -50,
-      x: -100,
-      cursor: "pointer",
-      transition: { duration: 1, type: "spring" },
-    },
-    hidden: { scale: 1, opacity: 0 },
-  };
+  const [selectedPokemon,setSelectedPokemeon] = React.useState<CustomPokemonType | null>(null)
 
   function getPokemonTypes(type:Array<PokemonTypes>){
     console.log(type);
-    return type.map( type => (
-      <img key={type.type.name} src={`Images/pokemonTypesSvg/${type.type.name}.svg`}/>
+    return type.map( (type,index) => (
+      <img style={{marginLeft: `${5*index}px`}} key={type.type.name} src={`Images/pokemonTypesSvg/${type.type.name}.svg`}/>
     ))
   }
 
@@ -41,7 +28,7 @@ function ExpandableCards (props:Props) {
           className='expandable-card__main'
           onClick={ () => {setSelectedPokemeon(pokemon); console.log(pokemon.sprites.other?.['official-artwork'].front_default)}}>
             <motion.h6 layoutId={pokemon.name+"-title"} className="expandable-card__tittle" >{pokemon.name + "♀"}</motion.h6>
-            {pokemon.sprites.other?.['official-artwork']?.front_default && <motion.img className='expandable-card__art' layoutId={pokemon.name+"-art"} src={pokemon.sprites.other?.['official-artwork'].front_default} />}
+            {pokemon.sprites.other?.['official-artwork']?.front_default && <motion.img style={{opacity: selectedPokemon?.name === pokemon.name ? 0 : 1}} className='expandable-card__art' layoutId={pokemon.name+"-art"} src={pokemon.sprites.other?.['official-artwork'].front_default} />}
             <motion.div className='expandable-card__type' layoutId={pokemon.name+"-types"}>{ getPokemonTypes(pokemon.types)} </motion.div>
             {/*<div>{ pokemon.id ? pokemon.id : "< # >"} </div>*/}
           </motion.li>
@@ -57,9 +44,9 @@ function ExpandableCards (props:Props) {
         layoutId={selectedPokemon.name}
         onClick={() => setSelectedPokemeon(null)}>
       <motion.h6 layoutId={selectedPokemon.name+"-title"}  className="expandable-card__tittle" transition={{ duration: 1 }}> {selectedPokemon.name}</motion.h6>
-      {selectedPokemon.sprites.other?.['official-artwork']?.front_default && <motion.img className='expandable-card__art' layoutId={selectedPokemon.name+"-art"} src={selectedPokemon.sprites.other?.['official-artwork'].front_default} />}
+      {selectedPokemon.sprites.other?.['official-artwork']?.front_default && <motion.img className='expandable-card__art' style={{opacity: 1}} layoutId={selectedPokemon.name+"-art"} src={selectedPokemon.sprites.other?.['official-artwork'].front_default} />}
       <motion.div className='expandable-card__type' layoutId={selectedPokemon.name+"-types"}>{ getPokemonTypes(selectedPokemon.types)} </motion.div>
-
+      <motion.div className='expandable-card__description'>{selectedPokemon.flavor_text_entries[0].flavor_text.replace("\f","\n")}</motion.div>
       </motion.div>
       )}
       </AnimatePresence>

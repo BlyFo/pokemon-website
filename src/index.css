@@ -15,10 +15,10 @@ code {
 :root {
   /*      Main Colors     */
   --background: #dde4fb;
-  --blue100: #acbcf3;
-  --blue200: #859bed;
-  --blue300: #5e78e7;
-  --blue400: #3f51e7;
-  --blue500: #2429ce;
-  --blue600: #0c226e;
+  --elevation100: #acbcf3;
+  --elevation200: #859bed;
+  --elevation300: #5e78e7;
+  --elevation400: #3f51e7;
+  --elevation500: #2429ce;
+  --elevation600: #0c226e;
 }

@@ -8,7 +8,7 @@
 .expandable-card__main {
   position: relative;
   color: black;
-  background-color: var(--blue200);
+  background-color: var(--elevation200);
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border-radius: 15px;
   height: 250px;
@@ -61,11 +61,20 @@
   /*z-index: 0;*/
   right: 0px;
 }
+.expandable-card__description {
+  position: absolute;
+  top: calc(50% - 100px);
+  height: 200px;
+  width: 250px;
+  /*border: 1px solid red;*/
+  left: 0px;
+  padding-top: 30px;
+}
 
 .expandable-card__clicked {
   color: black;
   position: relative;
-  background-color: var(--blue200);
+  background-color: var(--elevation200);
   height: 350px;
   width: 300px;
   padding: 0px;

@@ -92,3 +92,16 @@ export interface FullPokemonType {
     types: Array<PokemonTypes>;
     past_types: Array<any>;
 }
+
+export interface CustomPokemonType {
+    id: number;
+    name: string;
+    order: number;
+    forms: Array<any>;
+    species: BasicInfo;
+    sprites: FullSpriteType;
+    types: Array<PokemonTypes>;
+    names: Array<{name: string, language:BasicInfo}>
+    flavor_text_entries: Array<{flavor_text: string, language: BasicInfo, version: BasicInfo}>
+    form_descriptions: Array<{description:string, language: BasicInfo}>
+}

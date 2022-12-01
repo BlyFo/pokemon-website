@@ -1,33 +1,26 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import PokeApi from './Services/pokeApi';
-import {FullPokemonType} from './Utilities/pokemon/pokeApiTypes';
+import {CustomPokemonType, FullPokemonType} from './Utilities/pokemon/pokeApiTypes';
 import ExpandableCards from './Components/ExpandableCards/ExpandableCards';
+import SearchBar from './Components/searchBar/searchBar';
+import DropdownMenu from './Components/dropdownMenu/dropdownMenu';
+
+import Switch from '@mui/material/Switch';
 
 function App() {
 
-  const [pokemons,setPokemons] = React.useState<Array<FullPokemonType>>([])
-  const [scrollPosition, setScrollPosition] = React.useState(500);
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    if(position > 500) setScrollPosition(position);
-    if(position < 500) setScrollPosition(500);
-};
+  const [pokemons,setPokemons] = React.useState<Array<CustomPokemonType>>([])
+
 
   async function test() {
-    const result = await PokeApi.getPokeListByRegion(1);
-    const result2 = await PokeApi.getFullPokemonsInfo(result);
+    const result = await PokeApi.getPokemonsByGeneration(1);
+    const result2 = await PokeApi.getPokemonsFullInfo(result);
     if (pokemons.length === 0 && result2.length !== 0) setPokemons(result2);
   }
 
   useEffect(() => {
     test();
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-        window.removeEventListener('scroll', handleScroll);
-    };
-
   },[])
 
   return (
@@ -39,11 +32,11 @@ function App() {
           </div>
           <h1 className='header-description'> Web Page made with PokeAPI and React</h1>
         </header>
-        <nav className='nav-bar' style={{top: scrollPosition}}> 
-          <button> generacion </button> 
-          <button> typo </button>
-          <button> favoritos </button>
-          <button> buscar </button>
+        <nav className='nav-bar'> 
+          <DropdownMenu text='Generation' options={["1","2","3","4","5"]} />
+          <DropdownMenu text='typo' options={["1","2","3","4","5"]} />
+          <Switch />
+          <SearchBar text='Write pokemon name or ID' />
         </nav>
         {<ExpandableCards data={pokemons} />}
     </div>
