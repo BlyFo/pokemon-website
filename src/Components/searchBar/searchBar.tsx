@@ -1,27 +1,26 @@
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import { Icon } from '../Icons/iconsType';
+import Icons from '../Icons/icons';
 
 interface Props {
-    text?: string;
-    style?: object;
-    onSearch?: () => void;
-  }
+  text?: string;
+  style?: object;
+  onSearch?: () => void;
+}
 
 export default function SearchBar(props:Props) {
   return (
-    <Paper
-      component="form"
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-    >
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder={ props.text ? props.text : "" }
-        inputProps={{ 'aria-label': 'search google maps' }}
-      />
-      <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-        {/*<SearchIcon />*/}
-      </IconButton>
-    </Paper>
+    <TextField
+    label={ props.text ? props.text : ""}
+    InputProps={{
+      endAdornment: (
+        <InputAdornment position="end">
+          <Icons icon={ Icon.SEARCH } color="white" size='s' />
+        </InputAdornment>
+      ),
+    }}
+    variant="standard"
+  />
   );
 }

@@ -1,4 +1,4 @@
-export enum PokemonType {
+export enum PokemonTypes {
     Normal = "normal",
     Fire = "fire",
     Water = "water",
@@ -17,17 +17,4 @@ export enum PokemonType {
     Dragon = "dragon",
     Steel = "steel",
     Fairy = "fairy",
-}
-
-export enum PokemonColor {
-    Red,
-    Blue,
-    Yellow,
-    Green,
-    Black,
-    Brown,
-    Purple,
-    Gray,
-    White,
-    Pink,
 }
