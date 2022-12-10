@@ -18,4 +18,5 @@ export enum Icon {
     STELL_TYPE = "steel",
     FAIRY_TYPE = "fairy",
     SEARCH = "search",
+    NONE = "none",
 }

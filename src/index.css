@@ -1,5 +1,15 @@
 @import url("https://fonts.googleapis.com/css?family=Noto+Serif");
 
+:root {
+  /*      Main Colors     */
+
+  --color1: #0b0c10;
+  --color2: #1f2833;
+  --color3: #c5c6c7;
+  --color4: #66fcf1;
+  --color5: #45a29e;
+}
+
 body {
   margin: 0;
   font-family: "Noto Serif", serif;
@@ -8,20 +18,10 @@ body {
     sans-serif;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--color3);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-:root {
-  /*      Main Colors     */
-  --background: #dde4fb;
-  --elevation100: #acbcf3;
-  --elevation200: #859bed;
-  --elevation300: #5e78e7;
-  --elevation400: #3f51e7;
-  --elevation500: #2429ce;
-  --elevation600: #0c226e;
 }

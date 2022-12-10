@@ -2,6 +2,8 @@ import React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Icons from '../Icons/icons';
+import { Icon } from '../Icons/iconsType';
 
 interface Props {
   text: string;
@@ -11,9 +13,27 @@ interface Props {
   onSelect?: React.Dispatch<React.SetStateAction<any>>;
 }
 
+const selectStyle =  {
+  height: "35px", 
+  width:"200px", 
+  color: "var(--color3)",
+  display: "flex",
+  justifyContent: "center",
+  border: "1px solid var(--color3)",
+  borderRadius: "5px",
+  "& .MuiSvgIcon-root": {
+    color: "var(--color3)",
+  },
+  "& .MuiFilledInput-input":{
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "14px",
+  },
+}
+
 export default function DropdownMenu(props:Props) {
 
-    const [selected, setSelected] = React.useState('');
+  const [selected, setSelected] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelected(event.target.value as string);
@@ -27,10 +47,12 @@ export default function DropdownMenu(props:Props) {
   };
 
   const getItems = (items:Array<string>) => {
+    if(!items) return [];
     const itemsTotal = [...items]
     if(props.nullValue){
       itemsTotal.unshift(props.nullValue);
     }
+    if(selected === "") setSelected(itemsTotal[0]);
     return itemsTotal;
   }
 
@@ -40,21 +62,43 @@ export default function DropdownMenu(props:Props) {
     marginTop: "10px", 
     height: "35px", 
     width: "fit-content", 
-    border: "1px solid rgba(255, 255, 255, 0)" // necesary to fix a problem with the navbar
+    border: "1px solid rgba(255, 255, 255, 0)", // necesary to fix a problem with the navbar
   }
 
   return ( 
   <div style={dropDownStyle}>
-    <InputLabel id="select-label" style={{marginRight: "10px", userSelect: "none"}}>{props.text}</InputLabel>
+    <InputLabel id="select-label" style={{marginRight: "10px", userSelect: "none", color: "var(--color3)"}}>{props.text}</InputLabel>
     <Select
-      labelId="select-label"
-      id="select"
-      value={selected}
-      style={{height: "35px", width:"200px"}}
-      onChange={handleChange}>
-        {getItems(props.options).map((option) => (
-            <MenuItem key={option} value={option}>{option}</MenuItem>
-        ))}
+    labelId="select-label"
+    id="select"
+    value={selected}
+    defaultValue={"fire"}
+    variant="filled"
+    disableUnderline={true}
+    MenuProps={{
+      PaperProps: { 
+        sx: { 
+          maxHeight: 300,
+          minHeight: 200, 
+          backgroundColor: "--var(color3)" , 
+          marginTop: "5px",
+          '&::-webkit-scrollbar':{
+            width:"8px",
+          },
+          "&::-webkit-scrollbar-thumb":{
+            border: "2px solid transparent" ,
+            backgroundClip: "content-box",
+            backgroundColor: "var(--color2)" ,
+            borderRadius: "100px",
+          }
+        }
+      }
+    }}
+    sx={selectStyle}
+    onChange={(e) => handleChange(e)}>
+      {getItems(props.options).map((option) => (
+        <MenuItem key={option} value={option}><Icons icon={option as Icon} size={"s"} style={{marginRight: "7px"}} />{option}</MenuItem>
+      ))}
     </Select>
   </div>
   );

@@ -12,7 +12,8 @@ import { PokemonTypes } from './Utilities/pokemon/pokemonInfo';
 function App() {
 
   const [pokemons,setPokemons] = React.useState<Array<CustomPokemonType>>([])
-  const [pokemonType, setPokemonType] = React.useState<PokemonTypes | null>( null );
+  const [pokemonType, setPokemonType] = React.useState<PokemonTypes | null>(null);
+  const [pokemonSearch, setPokemonSearch] = React.useState<string>("");
 
 
   async function test() {
@@ -27,14 +28,26 @@ function App() {
 
   const filterPokemons= ( pokemons: Array<CustomPokemonType>) =>{
     let filteredPokemons = [...pokemons]
+
+    //filter by type
     if(pokemonType) {
-      console.log(pokemonType.toString());
       filteredPokemons = filteredPokemons.filter( pokemon => 
         pokemon.types.reduce( (accumulator, currentValue) => 
           accumulator || (currentValue.type.name === pokemonType.toString()), false
         )
       );
     }
+
+    // filter by id or name
+    if(pokemonSearch !== "") {
+      filteredPokemons = filteredPokemons.filter(pokemon => (
+        pokemon.name.includes(pokemonSearch) || pokemon.id.toString() === pokemonSearch
+      ));
+    }
+
+    //filter by generation
+    //TODO
+    
     return filteredPokemons;
   }
 
@@ -51,7 +64,7 @@ function App() {
           <DropdownMenu text='Generation' options={ Object.values(PokemonTypes) } nullValue="-" />
           <DropdownMenu text='typo' options={Object.values(PokemonTypes)} nullValue="-" onSelect={setPokemonType} />
           <Switch />
-          <SearchBar text='Write pokemon name or ID' />
+          <SearchBar text='Write pokemon name or ID' onSearch={setPokemonSearch} />
         </nav>
         <ExpandableCards data={filterPokemons(pokemons)} />
     </div>
