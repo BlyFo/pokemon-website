@@ -19,4 +19,6 @@ export enum Icon {
     FAIRY_TYPE = "fairy",
     SEARCH = "search",
     NONE = "none",
+    FAV_SELECT = "fav_selected",
+    FAV_NO_SELECT = "fav_no_selected",
 }

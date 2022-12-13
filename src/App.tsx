@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import PokeApi from './Services/pokeApi';
-import {CustomPokemonType} from './Utilities/pokemon/pokeApiTypes';
+import {CustomPokemonType, FavPokemons} from './Utilities/pokemon/pokeApiTypes';
 import ExpandableCards from './Components/ExpandableCards/ExpandableCards';
 import SearchBar from './Components/searchBar/searchBar';
 import DropdownMenu from './Components/dropdownMenu/dropdownMenu';
 
 import Switch from '@mui/material/Switch';
 import { PokemonTypes } from './Utilities/pokemon/pokemonInfo';
+import { useLocalStorage } from './Utilities/hooks/useLocalStorage';
 
 function App() {
 
@@ -15,18 +16,35 @@ function App() {
   const [pokemonType, setPokemonType] = React.useState<PokemonTypes | null>(null);
   const [pokemonSearch, setPokemonSearch] = React.useState<string>("");
 
+  const [favPokemons, setFavPokemons] = useLocalStorage<Array<FavPokemons>>("favPokemons",[] );
 
-  async function test() {
+  const [checked, setChecked] = React.useState(true);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+  };
+
+  async function FetchPokemonInfo() {
     const result = await PokeApi.getPokemonsByGeneration(1);
     const result2 = await PokeApi.getPokemonsFullInfo(result);
     if (pokemons.length === 0 && result2.length !== 0) setPokemons(result2);
   }
 
   useEffect(() => {
-    test();
+    FetchPokemonInfo();
   },[])
 
-  const filterPokemons= ( pokemons: Array<CustomPokemonType>) =>{
+  const onFavPokemon = (pokemon:CustomPokemonType ) => {
+    setFavPokemons([
+      ...favPokemons,
+      {
+        id: pokemon.id, 
+        species: pokemon.species
+      }
+    ])
+  }
+
+  const filterPokemons = ( pokemons: Array<CustomPokemonType>) =>{
     let filteredPokemons = [...pokemons]
 
     //filter by type
@@ -40,13 +58,20 @@ function App() {
 
     // filter by id or name
     if(pokemonSearch !== "") {
-      filteredPokemons = filteredPokemons.filter(pokemon => (
+      filteredPokemons = filteredPokemons.filter( pokemon => (
         pokemon.name.includes(pokemonSearch) || pokemon.id.toString() === pokemonSearch
       ));
     }
 
     //filter by generation
     //TODO
+
+    //filter Fav Pokemons
+    if(checked){
+      filteredPokemons = filteredPokemons.filter( pokemon => (
+        favPokemons.find( fav => fav.id === pokemon.id)
+      ))
+    }
     
     return filteredPokemons;
   }
@@ -63,10 +88,13 @@ function App() {
         <nav className='nav-bar'> 
           <DropdownMenu text='Generation' options={ Object.values(PokemonTypes) } nullValue="-" />
           <DropdownMenu text='typo' options={Object.values(PokemonTypes)} nullValue="-" onSelect={setPokemonType} />
-          <Switch />
-          <SearchBar text='Write pokemon name or ID' onSearch={setPokemonSearch} />
+          <Switch
+            checked={checked}
+            onChange={handleChange}
+          />
+          <SearchBar text='Write pokemon name or ID' onSearch={setPokemonSearch}  />
         </nav>
-        <ExpandableCards data={filterPokemons(pokemons)} />
+        <ExpandableCards data={filterPokemons(pokemons)} onFav={onFavPokemon} favData={favPokemons} />
     </div>
   );
 }

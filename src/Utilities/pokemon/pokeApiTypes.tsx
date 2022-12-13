@@ -105,3 +105,8 @@ export interface CustomPokemonType {
     flavor_text_entries: Array<{flavor_text: string, language: BasicInfo, version: BasicInfo}>
     form_descriptions: Array<{description:string, language: BasicInfo}>
 }
+
+export interface FavPokemons {
+    id: number;
+    species: BasicInfo;
+}

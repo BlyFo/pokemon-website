@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BasicInfo, FullPokemonType, PokemonSpeciesType, CustomPokemonType } from "../Utilities/pokemon/pokeApiTypes";
-import StringUtils from "../Utilities/pokemon/stringUtils";
+import StringUtils from "../Utilities/stringUtils";
 const BASE_URL = "https://pokeapi.co/api/v2/";
 
 export default class PokeApi {

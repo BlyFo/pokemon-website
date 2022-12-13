@@ -32,6 +32,28 @@
   text-align: center;
 }
 
+.expandable-card__clickeable-area {
+  border-radius: 0px 0px 15px 15px;
+  margin: 0px;
+  padding: 0px;
+  margin-top: 33px;
+  height: 217px;
+  cursor: pointer;
+}
+
+.expandable-card__fav-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  margin: 0px;
+  padding: 0px;
+  width: 25px;
+  height: 25px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 .expandable-card__type {
   position: absolute;
   bottom: 5px;
