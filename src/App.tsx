@@ -6,9 +6,10 @@ import ExpandableCards from './Components/ExpandableCards/ExpandableCards';
 import SearchBar from './Components/searchBar/searchBar';
 import DropdownMenu from './Components/dropdownMenu/dropdownMenu';
 
-import Switch from '@mui/material/Switch';
+import { motion } from 'framer-motion';
 import { PokemonTypes } from './Utilities/pokemon/pokemonInfo';
 import { useLocalStorage } from './Utilities/hooks/useLocalStorage';
+import CustomSwitch from './Components/Switch/CustomSwitch';
 
 function App() {
 
@@ -34,14 +35,20 @@ function App() {
     FetchPokemonInfo();
   },[])
 
-  const onFavPokemon = (pokemon:CustomPokemonType ) => {
-    setFavPokemons([
-      ...favPokemons,
-      {
-        id: pokemon.id, 
-        species: pokemon.species
-      }
-    ])
+  const onFavPokemon = (pokemon:CustomPokemonType, isIncluded: boolean ) => {
+    if (isIncluded){
+      setFavPokemons(
+        favPokemons.filter(favPokemon => favPokemon.id !== pokemon.id)
+      );
+    } else {
+      setFavPokemons([
+        ...favPokemons,
+        {
+          id: pokemon.id, 
+          species: pokemon.species
+        }
+      ]);
+    }
   }
 
   const filterPokemons = ( pokemons: Array<CustomPokemonType>) =>{
@@ -77,7 +84,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <motion.div className="App">
         <header className='header'>
           <div className="logo__container">
             <div className="logo__glow"></div>
@@ -87,15 +94,14 @@ function App() {
         </header>
         <nav className='nav-bar'> 
           <DropdownMenu text='Generation' options={ Object.values(PokemonTypes) } nullValue="-" />
-          <DropdownMenu text='typo' options={Object.values(PokemonTypes)} nullValue="-" onSelect={setPokemonType} />
-          <Switch
-            checked={checked}
-            onChange={handleChange}
-          />
+          <DropdownMenu text='type' options={Object.values(PokemonTypes)} nullValue="-" onSelect={setPokemonType} />
+          <CustomSwitch value={checked} onValueChange={handleChange}/>
           <SearchBar text='Write pokemon name or ID' onSearch={setPokemonSearch}  />
         </nav>
-        <ExpandableCards data={filterPokemons(pokemons)} onFav={onFavPokemon} favData={favPokemons} />
-    </div>
+        <motion.div>
+          <ExpandableCards data={filterPokemons(pokemons)} onFav={onFavPokemon} favData={favPokemons} />
+        </motion.div>
+    </motion.div>
   );
 }
 

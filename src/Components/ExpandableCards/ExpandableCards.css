@@ -79,6 +79,7 @@
   height: 200px;
   width: 200px;
   right: 0px;
+  user-select: none;
 }
 .expandable-card__description {
   position: absolute;

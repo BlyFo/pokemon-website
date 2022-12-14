@@ -20,7 +20,7 @@ const selectStyle =  {
   display: "flex",
   justifyContent: "center",
   border: "1px solid var(--color3)",
-  borderRadius: "5px",
+  borderRadius: "7px",
   "& .MuiSvgIcon-root": {
     color: "var(--color3)",
   },
@@ -80,10 +80,12 @@ export default function DropdownMenu(props:Props) {
         sx: { 
           maxHeight: 300,
           minHeight: 200, 
+          borderRadius: "10px",
           backgroundColor: "--var(color3)" , 
           marginTop: "5px",
           '&::-webkit-scrollbar':{
             width:"8px",
+            backgroundColor: "white"
           },
           "&::-webkit-scrollbar-thumb":{
             border: "2px solid transparent" ,

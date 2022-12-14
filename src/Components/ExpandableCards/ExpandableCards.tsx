@@ -8,7 +8,7 @@ import { Icon } from '../Icons/iconsType';
 
 interface Props {
   data: Array<CustomPokemonType>;
-  onFav?: (pokemon:CustomPokemonType) => void;
+  onFav?: (pokemon:CustomPokemonType, isIncluded:boolean) => void;
   favData?: Array<FavPokemons>;
 }
 
@@ -22,9 +22,9 @@ function ExpandableCards (props:Props) {
     ))
   }
 
-  function fav(pokemon: CustomPokemonType ){
+  function fav(pokemon: CustomPokemonType, isIncluded:boolean ){
     if(!props.onFav) return;
-    props.onFav(pokemon);
+    props.onFav(pokemon, isIncluded);
   }
 
   function checkFav(pokemon: CustomPokemonType ){
@@ -35,20 +35,25 @@ function ExpandableCards (props:Props) {
   return (
     <LayoutGroup>
       <ul className='expandable-card__group' >
-        {props.data.map((pokemon) => (
-          <motion.li 
-          key={pokemon.name}
-          layoutId={pokemon.name}
-          className='expandable-card__main'
-          style={{opacity: selectedPokemon?.name === pokemon.name ? 0 : 1}}>
-            <motion.h6 layoutId={pokemon.name+"-title"} className="expandable-card__tittle" >{pokemon.name}</motion.h6>
-            { props.onFav && <motion.button onClick={ () => fav(pokemon)} className='expandable-card__fav-icon' > <Icons icon={ checkFav(pokemon) ? Icon.FAV_SELECT : Icon.FAV_NO_SELECT} size="s"/> </motion.button>}
-            <motion.div className='expandable-card__clickeable-area' onClick={ () => setSelectedPokemeon(pokemon)}>
-              {pokemon.sprites.other?.['official-artwork']?.front_default && <motion.img  className='expandable-card__art' layoutId={pokemon.name+"-art"} src={pokemon.sprites.other?.['official-artwork'].front_default} />}
-              <motion.div className='expandable-card__type' layoutId={pokemon.name+"-types"}>{ getPokemonTypes(pokemon.types)} </motion.div>
-            </motion.div>
-          </motion.li>
-        ))}
+        {props.data.map((pokemon) => {
+          const isFav = checkFav(pokemon)
+          return(
+            <motion.li 
+            key={pokemon.name}
+            layoutId={pokemon.name}
+            initial={{opacity:0}}
+            animate={{opacity:1, transition:{duration: 0.5}}}
+            className='expandable-card__main'
+            style={{opacity: selectedPokemon?.name === pokemon.name ? 0 : 1}}>
+              <motion.h6 layoutId={pokemon.name+"-title"} className="expandable-card__tittle" >{pokemon.name}</motion.h6>
+              { props.onFav && <motion.button onClick={ () => fav(pokemon, isFav)} className='expandable-card__fav-icon' > <Icons icon={ isFav ? Icon.FAV_SELECT : Icon.FAV_NO_SELECT} size="s" color={ isFav ? 'var(--color4)': 'var(--color3)'}/> </motion.button>}
+              <motion.div className='expandable-card__clickeable-area' onClick={ () => setSelectedPokemeon(pokemon)}>
+                {pokemon.sprites.other?.['official-artwork']?.front_default && <motion.img  className='expandable-card__art' layoutId={pokemon.name+"-art"} src={pokemon.sprites.other?.['official-artwork'].front_default} />}
+                <motion.div className='expandable-card__type' layoutId={pokemon.name+"-types"}>{ getPokemonTypes(pokemon.types)} </motion.div>
+              </motion.div>
+            </motion.li>
+          );
+        })}
       </ul>
       <AnimatePresence>
       {selectedPokemon && (

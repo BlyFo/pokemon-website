@@ -10,6 +10,15 @@
   --color5: #45a29e;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--color1);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color2);
+  border-radius: 100px;
+}
+
 body {
   margin: 0;
   font-family: "Noto Serif", serif;
@@ -19,6 +28,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color3);
+  background-color: var(--color1);
 }
 
 code {
