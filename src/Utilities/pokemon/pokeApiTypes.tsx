@@ -101,9 +101,10 @@ export interface CustomPokemonType {
     species: BasicInfo;
     sprites: FullSpriteType;
     types: Array<PokemonTypes>;
-    names: Array<{name: string, language:BasicInfo}>
-    flavor_text_entries: Array<{flavor_text: string, language: BasicInfo, version: BasicInfo}>
-    form_descriptions: Array<{description:string, language: BasicInfo}>
+    names: Array<{name: string, language:BasicInfo}>;
+    flavor_text_entries: Array<{flavor_text: string, language: BasicInfo, version: BasicInfo}>;
+    form_descriptions: Array<{description:string, language: BasicInfo}>;
+    generation: number;
 }
 
 export interface FavPokemons {

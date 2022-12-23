@@ -49,7 +49,9 @@ export default class PokeApi {
   */
   static async getPokemonsByGeneration(generationNumber:number){
     const res = await axios.get(BASE_URL+`generation/${generationNumber}`)
-    return res.data.pokemon_species as Array<BasicInfo>;
+    const list = res.data.pokemon_species as Array<BasicInfo>;
+    const orderedList = list.sort((a,b) => parseInt(a.url.split("/")[6]) - parseInt(b.url.split("/")[6]))
+    return orderedList as Array<BasicInfo>;
   }
 
   static async getPokemonFullInfo(pokemon: BasicInfo){
@@ -68,16 +70,25 @@ export default class PokeApi {
       types: pokemonData.types,
       names: pokemonSpecies.names,
       flavor_text_entries: pokemonSpecies.flavor_text_entries,
-      form_descriptions: pokemonSpecies.form_descriptions
+      form_descriptions: pokemonSpecies.form_descriptions,
+      generation: parseInt(pokemonSpecies.generation.url.split("/")[6])
     }
     return customType;
   }
+
   static async getPokemonsFullInfo(pokemons: Array<BasicInfo>){
     let fullList:Array<CustomPokemonType> = await Promise.all(
       pokemons.map(async (pokemon) => {
         return await this.getPokemonFullInfo(pokemon);
       })
     )
-    return fullList.sort((a,b) => a.order - b.order)
+    return fullList.sort((a,b) => a.id - b.id)
+  }
+
+  // fetch how many generations there are
+  // this will stop working after gen 20 
+  static async getPokemonGenerations(){
+    const res = await axios.get(BASE_URL+`generation/`)
+    return res.data.count;
   }
 }

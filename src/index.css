@@ -29,6 +29,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--color3);
   background-color: var(--color1);
+  overflow-x: hidden;
 }
 
 code {

@@ -11,6 +11,7 @@ interface Props {
   options: Array<string>;
   nullValue?: string;
   onSelect?: React.Dispatch<React.SetStateAction<any>>;
+  icons?: boolean;
 }
 
 const selectStyle =  {
@@ -47,7 +48,7 @@ export default function DropdownMenu(props:Props) {
   };
 
   const getItems = (items:Array<string>) => {
-    if(!items) return [];
+    if(!items || items.length === 0) return [];
     const itemsTotal = [...items]
     if(props.nullValue){
       itemsTotal.unshift(props.nullValue);
@@ -99,7 +100,10 @@ export default function DropdownMenu(props:Props) {
     sx={selectStyle}
     onChange={(e) => handleChange(e)}>
       {getItems(props.options).map((option) => (
-        <MenuItem key={option} value={option}><Icons icon={option as Icon} size={"s"} style={{marginRight: "7px"}} />{option}</MenuItem>
+        <MenuItem key={option} value={option}>
+          { props.icons && <Icons icon={option as Icon} size={"s"} style={{marginRight: "7px"}} />}
+          {option}
+        </MenuItem>
       ))}
     </Select>
   </div>
