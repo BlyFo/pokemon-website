@@ -14,9 +14,9 @@ interface Props {
   icons?: boolean;
 }
 
-const selectStyle =  {
-  height: "35px", 
-  width:"200px", 
+const selectStyle = {
+  height: "35px",
+  width: "200px",
   color: "var(--color3)",
   display: "flex",
   justifyContent: "center",
@@ -25,87 +25,87 @@ const selectStyle =  {
   "& .MuiSvgIcon-root": {
     color: "var(--color3)",
   },
-  "& .MuiFilledInput-input":{
+  "& .MuiFilledInput-input": {
     display: "flex",
     alignItems: "center",
     marginBottom: "14px",
   },
 }
 
-export default function DropdownMenu(props:Props) {
+export default function DropdownMenu(props: Props) {
 
   const [selected, setSelected] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelected(event.target.value as string);
-    if(props.onSelect){ 
-      if(event.target.value === props.nullValue){
+    if (props.onSelect) {
+      if (event.target.value === props.nullValue) {
         props.onSelect(null);
-      }else{
-        props.onSelect(event.target.value) 
+      } else {
+        props.onSelect(event.target.value)
       }
     }
   };
 
-  const getItems = (items:Array<string>) => {
-    if(!items || items.length === 0) return [];
+  const getItems = (items: Array<string>) => {
+    if (!items || items.length === 0) return [];
     const itemsTotal = [...items]
-    if(props.nullValue){
+    if (props.nullValue) {
       itemsTotal.unshift(props.nullValue);
     }
-    if(selected === "") setSelected(itemsTotal[0]);
+    if (selected === "") setSelected(itemsTotal[0]);
     return itemsTotal;
   }
 
   const dropDownStyle = {
-    display: 'flex', 
+    display: 'flex',
     alignItems: "center",
-    marginTop: "10px", 
-    height: "35px", 
-    width: "fit-content", 
+    marginTop: "10px",
+    height: "35px",
+    width: "fit-content",
     border: "1px solid rgba(255, 255, 255, 0)", // necesary to fix a problem with the navbar
   }
 
-  return ( 
-  <div style={dropDownStyle}>
-    <InputLabel id="select-label" style={{marginRight: "10px", userSelect: "none", color: "var(--color3)"}}>{props.text}</InputLabel>
-    <Select
-    labelId="select-label"
-    id="select"
-    value={selected}
-    defaultValue={"fire"}
-    variant="filled"
-    disableUnderline={true}
-    MenuProps={{
-      PaperProps: { 
-        sx: { 
-          maxHeight: 300,
-          minHeight: 200, 
-          borderRadius: "10px",
-          backgroundColor: "--var(color3)" , 
-          marginTop: "5px",
-          '&::-webkit-scrollbar':{
-            width:"8px",
-            backgroundColor: "white"
-          },
-          "&::-webkit-scrollbar-thumb":{
-            border: "2px solid transparent" ,
-            backgroundClip: "content-box",
-            backgroundColor: "var(--color2)" ,
-            borderRadius: "100px",
+  return (
+    <div style={dropDownStyle}>
+      <InputLabel id="select-label" style={{ marginRight: "10px", userSelect: "none", color: "var(--color3)" }}>{props.text}</InputLabel>
+      <Select
+        labelId="select-label"
+        id="select"
+        value={selected}
+        defaultValue={"fire"}
+        variant="filled"
+        disableUnderline={true}
+        MenuProps={{
+          PaperProps: {
+            sx: {
+              maxHeight: 300,
+              minHeight: 200,
+              borderRadius: "10px",
+              backgroundColor: "--var(color3)",
+              marginTop: "5px",
+              '&::-webkit-scrollbar': {
+                width: "8px",
+                backgroundColor: "white"
+              },
+              "&::-webkit-scrollbar-thumb": {
+                border: "2px solid transparent",
+                backgroundClip: "content-box",
+                backgroundColor: "var(--color2)",
+                borderRadius: "100px",
+              }
+            }
           }
-        }
-      }
-    }}
-    sx={selectStyle}
-    onChange={(e) => handleChange(e)}>
-      {getItems(props.options).map((option) => (
-        <MenuItem key={option} value={option}>
-          { props.icons && <Icons icon={option as Icon} size={"s"} style={{marginRight: "7px"}} />}
-          {option}
-        </MenuItem>
-      ))}
-    </Select>
-  </div>
+        }}
+        sx={selectStyle}
+        onChange={(e) => handleChange(e)}>
+        {getItems(props.options).map((option) => (
+          <MenuItem key={option} value={option}>
+            {props.icons && <Icons icon={option as Icon} size={"s"} style={{ marginRight: "7px" }} />}
+            {option}
+          </MenuItem>
+        ))}
+      </Select>
+    </div>
   );
 }
