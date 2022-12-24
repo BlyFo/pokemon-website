@@ -12,13 +12,13 @@ interface Props {
   options?: Array<string>;
 }
 
-export default function SearchBar(props:Props) {
+export default function SearchBar(props: Props) {
 
-  const [text,setText] = React.useState<string>("");
+  const [text, setText] = React.useState<string>("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
-    if(props.onSearch) props.onSearch(event.target.value);
+    if (props.onSearch) props.onSearch(event.target.value);
   };
 
   return (
@@ -26,40 +26,40 @@ export default function SearchBar(props:Props) {
       disablePortal
       id="combo-box-demo"
       options={props.options ? props.options : []}
-      sx={{ 
-        width: 300, 
-        "& .MuiFormLabel-root":{ 
+      sx={{
+        width: 300,
+        "& .MuiFormLabel-root": {
           color: "var(--color3)"
         }
       }}
-      renderInput={(params) => 
+      renderInput={(params) =>
         <TextField
-        {...params}
-        label={ props.text ? props.text : ""}
-        value={text}
-        onChange={handleChange}
-        InputLabelProps={{
-          style: { color: 'var(--color3)' },
-        }}
-        sx={{ 
-          input: { color: 'var(--color3)' },
-          '& .MuiInput-underline:before': {
-            borderBottomColor: 'var(--color3) !important',
-          },
-          '& .MuiInput-underline:after': {
-            borderBottomColor: 'var(--color4)',
-          },
-        }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <Icons icon={ Icon.SEARCH } color="var(--color3)" size='s' />
-            </InputAdornment>
-          ),
-        }}
-        variant="standard"
-      />
-    }
-  />
+          {...params}
+          label={props.text ? props.text : ""}
+          value={text}
+          onChange={handleChange}
+          InputLabelProps={{
+            style: { color: 'var(--color3)' },
+          }}
+          sx={{
+            input: { color: 'var(--color3)' },
+            '& .MuiInput-underline:before': {
+              borderBottomColor: 'var(--color3) !important',
+            },
+            '& .MuiInput-underline:after': {
+              borderBottomColor: 'var(--color4)',
+            },
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Icons icon={Icon.SEARCH} color="var(--color3)" size='s' />
+              </InputAdornment>
+            ),
+          }}
+          variant="standard"
+        />
+      }
+    />
   );
 }

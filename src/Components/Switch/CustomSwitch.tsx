@@ -12,18 +12,18 @@ function CustomSwitch(props: Props) {
     <Switch
       disableRipple
       sx={{
-        marginTop: "10px", 
+        marginTop: "10px",
         height: "20px",
         width: "50px",
         padding: "0px",
-        "& .MuiSwitch-thumb": { 
+        "& .MuiSwitch-thumb": {
           backgroundColor: "var(--color4)",
           height: "12px",
           width: "12px",
           margin: "0px",
           boxSizing: 'border-box',
         },
-        "& .css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked":{
+        "& .css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked": {
           transform: 'translateX(29px)',
         },
         "& .MuiSwitch-track": {
@@ -40,7 +40,7 @@ function CustomSwitch(props: Props) {
       }}
       checked={props.value}
       onChange={props.onValueChange}
-    /> 
+    />
   );
 }
 

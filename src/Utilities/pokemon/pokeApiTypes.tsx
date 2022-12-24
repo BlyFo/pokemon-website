@@ -15,7 +15,7 @@ export interface SpriteType {
 }
 
 export interface FullSpriteType extends SpriteType {
-    other : {
+    other: {
         dream_world: SpriteType | null,
         home: SpriteType | null,
         "official-artwork": SpriteType,
@@ -55,19 +55,19 @@ export interface PokemonSpeciesType {
     color: BasicInfo;
     shape: BasicInfo;
     evolves_from_species: BasicInfo | null;
-    evolution_chain: {url: string};
+    evolution_chain: { url: string };
     habitat: BasicInfo;
     generation: BasicInfo;
-    names: Array<{name: string, language:BasicInfo}>
-    flavor_text_entries: Array<{flavor_text: string, language: BasicInfo, version: BasicInfo}>
-    form_descriptions: Array<{description:string, language: BasicInfo}>
-    genera: Array<{genus: string, language: BasicInfo}>
-    varieties: Array<{is_default: boolean, pokemon: BasicInfo}>
+    names: Array<{ name: string, language: BasicInfo }>
+    flavor_text_entries: Array<{ flavor_text: string, language: BasicInfo, version: BasicInfo }>
+    form_descriptions: Array<{ description: string, language: BasicInfo }>
+    genera: Array<{ genus: string, language: BasicInfo }>
+    varieties: Array<{ is_default: boolean, pokemon: BasicInfo }>
 }
 
 export interface PokemonTypes {
-    slot:number;
-    type:BasicInfo;
+    slot: number;
+    type: BasicInfo;
 }
 
 export interface FullPokemonType {
@@ -101,9 +101,9 @@ export interface CustomPokemonType {
     species: BasicInfo;
     sprites: FullSpriteType;
     types: Array<PokemonTypes>;
-    names: Array<{name: string, language:BasicInfo}>;
-    flavor_text_entries: Array<{flavor_text: string, language: BasicInfo, version: BasicInfo}>;
-    form_descriptions: Array<{description:string, language: BasicInfo}>;
+    names: Array<{ name: string, language: BasicInfo }>;
+    flavor_text_entries: Array<{ flavor_text: string, language: BasicInfo, version: BasicInfo }>;
+    form_descriptions: Array<{ description: string, language: BasicInfo }>;
     generation: number;
 }
 
