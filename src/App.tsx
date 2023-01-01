@@ -76,7 +76,7 @@ function App() {
 
   // create the list of gens and initialize empty arrays   
   function buildGenerationData(generations: number) {
-    let data = []
+    let data: Array<string> = []
     const toFetchDict: Record<number, { list: Array<BasicInfo>, allFetch: boolean }> = {};
     const pokemonsDict: Record<number, Array<CustomPokemonType>> = {};
     for (let i = 0; i < generations; i++) {

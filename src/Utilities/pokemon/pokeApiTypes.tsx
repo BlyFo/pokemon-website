@@ -70,6 +70,12 @@ export interface PokemonTypes {
     type: BasicInfo;
 }
 
+export interface pokemonLanguages {
+    flavor_text: string;
+    language: BasicInfo;
+    version: BasicInfo;
+}
+
 export interface FullPokemonType {
     id: number;
     name: string;
@@ -102,7 +108,7 @@ export interface CustomPokemonType {
     sprites: FullSpriteType;
     types: Array<PokemonTypes>;
     names: Array<{ name: string, language: BasicInfo }>;
-    flavor_text_entries: Array<{ flavor_text: string, language: BasicInfo, version: BasicInfo }>;
+    flavor_text_entries: Array<pokemonLanguages>;
     form_descriptions: Array<{ description: string, language: BasicInfo }>;
     generation: number;
 }

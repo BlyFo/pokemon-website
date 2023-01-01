@@ -1,3 +1,5 @@
+import { pokemonLanguages } from "./pokemon/pokeApiTypes";
+
 export default class StringUtils {
 
   constructor() {
@@ -7,14 +9,19 @@ export default class StringUtils {
   }
 
   static cleanPokemonName(name: string) {
-    const firstCharacters = name.slice(0, name.length - 2);
-    const lastCharacters = name.slice(name.length - 2, name.length);
-    if (lastCharacters === "-f") name = firstCharacters + "♀";
-    if (lastCharacters === "-m") name = firstCharacters + "♂";
-    return name;
+    const nameSeparated = name.split("-");
+    let cleanName = nameSeparated[0];
+    if (nameSeparated.length <= 1) return name;
+    if (nameSeparated[1] === "f") cleanName += "♀";
+    if (nameSeparated[1] === "m") cleanName += "♂";
+    return cleanName;
   }
 
   static cleanDescription(description: string) {
     return description.replace("\f", "\n").toLowerCase()
+  }
+
+  static filterLanguage(text: Array<pokemonLanguages>, language: string) {
+    return text.filter(text => text.language.name === language)[0]
   }
 }
