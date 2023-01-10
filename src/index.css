@@ -19,6 +19,16 @@
   border-radius: 100px;
 }
 
+a {
+  text-decoration: none;
+  color: var(--color5);
+  transition: color 0.8s;
+}
+
+a:hover {
+  color: var(--color4);
+}
+
 body {
   margin: 0;
   font-family: "Noto Serif", serif;

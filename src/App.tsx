@@ -11,6 +11,9 @@ import { PokemonTypes } from './Utilities/pokemon/pokemonInfo';
 import { useLocalStorage } from './Utilities/hooks/useLocalStorage';
 import CustomSwitch from './Components/Switch/CustomSwitch';
 
+import Loading from './Components/LoadingAnimation/Loading';
+import { LanguageTypes } from './Utilities/languages';
+
 function App() {
 
   const [pokemons, setPokemons] = React.useState<Record<number, Array<CustomPokemonType>>>({ 1: [] })
@@ -21,6 +24,8 @@ function App() {
   const [pokemonGen, setPokemonGen] = React.useState<number>(1);
   const [saveFavPokemons, setSaveFavPokemons] = useLocalStorage<Array<FavPokemons>>("favPokemons", []);
   const [checked, setChecked] = React.useState(false);
+
+  const [language, setLanguage] = React.useState("es")
 
   const [loading, setLoading] = React.useState(true);
   const observer = React.useRef<null | IntersectionObserver>(null);
@@ -42,7 +47,7 @@ function App() {
         } else if (!pokemonsToFetch.current[pokemonGen].allFetch) {
           setLoading(true);
           const list = await fetchPokemons() as Record<number, Array<CustomPokemonType>>;
-          setPokemons(list);
+          if (list) setPokemons(list);
           setLoading(false);
         }
       }
@@ -117,6 +122,9 @@ function App() {
     const newgen = parseInt(gen.split(" ")[1])
     setPokemonGen(newgen)
   }
+  const changeLanguage = (selectedLanguage: string) => {
+    setLanguage(Object.entries(LanguageTypes).filter(a => a[0] === selectedLanguage)[0][1]);
+  }
 
   const onFavPokemon = (pokemon: CustomPokemonType, isIncluded: boolean) => {
     //if a pokemons was marked as fav before we remove form the list, else its added
@@ -135,9 +143,10 @@ function App() {
     }
   }
 
-  const filterPokemons = (pokemons: Array<CustomPokemonType>) => {
+  const getFilteredPokemons = () => {
+    const pokemonsList = checked ? pokemonsFav : pokemons[pokemonGen]
 
-    let filteredPokemons = pokemons;
+    let filteredPokemons = pokemonsList;
     //filter by type
     if (pokemonType) {
       filteredPokemons = filteredPokemons.filter(pokemon =>
@@ -164,17 +173,30 @@ function App() {
           <div className="logo__glow"></div>
           <img className='logo' alt='' src='Images/background/pokeball.svg'></img>
         </div>
-        <h1 className='header-description'> Web Page made with PokeAPI and React</h1>
+        <div style={{ marginTop: "150px" }}>
+          <h1 style={{ fontSize: "50px", margin: "5px" }}> Poke-List </h1>
+          <h3 style={{ fontSize: "20px" }}> Webpage made with
+            <a href='https://pokeapi.co/' target="_blank" rel="noopener noreferrer"> ¨PokeApi</a>
+            {", "}
+            <a href='https://reactjs.org/' target="_blank" rel="noopener noreferrer"> React</a>
+            {" and "}
+            <a href='https://www.framer.com/motion/' target="_blank" rel="noopener noreferrer"> Framer motion</a>
+            .
+          </h3>
+        </div>
       </header>
       <nav className='nav-bar'>
+        <DropdownMenu text='language' options={Object.entries(LanguageTypes).map(a => a[0])} onSelect={changeLanguage} />
         <DropdownMenu text='Generation' options={pokemonGenCount} onSelect={updateCurrentGeneration} />
         <DropdownMenu text='Type' options={Object.values(PokemonTypes)} icons nullValue="-" onSelect={setPokemonType} />
         <CustomSwitch value={checked} onValueChange={handleChange} />
         <SearchBar text='Write pokemon name or ID' onSearch={setPokemonSearch} />
       </nav>
       <motion.div>
-        <ExpandableCards data={filterPokemons(checked ? pokemonsFav : pokemons[pokemonGen])} onFav={onFavPokemon} favData={saveFavPokemons} />
-        <div ref={endOfPokemonListRef} style={{ height: 0, width: "100%", background: "none", border: "1px solid red" }} > </div>
+        <ExpandableCards data={getFilteredPokemons()} onFav={onFavPokemon} favData={saveFavPokemons} language={language} />
+        <div ref={endOfPokemonListRef} style={{ height: 200, width: "100%", background: "none", position: "relative" }} >
+          {loading && <Loading />}
+        </div>
       </motion.div>
     </motion.div>
   );

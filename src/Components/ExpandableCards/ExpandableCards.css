@@ -10,8 +10,8 @@
   background-color: var(--color2);
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border-radius: 15px;
-  height: 250px;
-  width: 200px;
+  /*height: 250px;
+  width: 200px;*/
   padding: 0px;
   margin: 10px;
 }

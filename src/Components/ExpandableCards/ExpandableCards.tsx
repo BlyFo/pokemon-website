@@ -10,6 +10,7 @@ interface Props {
   data: Array<CustomPokemonType>;
   onFav?: (pokemon: CustomPokemonType, isIncluded: boolean) => void;
   favData?: Array<FavPokemons>;
+  language: string;
 }
 
 function ExpandableCards(props: Props) {
@@ -39,10 +40,12 @@ function ExpandableCards(props: Props) {
           const isFav = checkFav(pokemon)
           return (
             <motion.li
-              key={pokemon.name}
+              key={"card" + pokemon.name}
               layoutId={pokemon.name}
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 0, height: "250px", width: "200px" }}
               animate={{ opacity: 1, transition: { duration: 0.5 } }}
+              exit={{ opacity: 0 }}
+              //style={{ backgroundColor: selectedPokemon.filter(a => a.id === pokemon.id).length === 0 ? "red" : "blue" }}
               className='expandable-card__main'>
               <motion.h6 layoutId={pokemon.name + "-title"} className="expandable-card__tittle" >{pokemon.name}</motion.h6>
               {props.onFav &&
@@ -64,15 +67,15 @@ function ExpandableCards(props: Props) {
       </ul>
       {selectedPokemon.length > 0 &&
         <ul className='expandable-card__group' >
-          {selectedPokemon.map((pokemon) => {
-            const isFav = checkFav(pokemon)
-            return (
-              <AnimatePresence>
+          <AnimatePresence>
+            {selectedPokemon.map((pokemon) => {
+              const isFav = checkFav(pokemon)
+              return (
                 <motion.li
-                  key={"selected card " + pokemon.name}
+                  key={"card " + pokemon.name}
                   animate={{ width: "450px" }}
-                  transition={{ duration: 0.5 }}
-                  initial={{ opacity: 1 }}
+                  transition={{ duration: 0.5, bounce: 0 }}
+                  initial={{ height: "250px", width: "200px", position: "fixed", zIndex: 3 }}
                   className="expandable-card__main"
                   style={{ position: "fixed", top: "30%", left: "40%", zIndex: 3 }}
                   layoutId={pokemon.name}
@@ -90,7 +93,15 @@ function ExpandableCards(props: Props) {
                   {pokemon.sprites.other?.['official-artwork']?.front_default &&
                     <motion.img
                       className='expandable-card__art'
-                      initial={{ right: "0px", top: "calc(50% - 100px)" }}
+                      initial={{ right: "0px", top: "calc(50% - 100px)", transform: "translate3d(0px,0px,0px)", translateX: 0 }}
+                      animate={{ transform: "translate3d(0px,0px,0px)", translateX: 0 }}
+                      transition={{
+                        type: "spring",
+                        damping: 500,
+                        stiffness: 5,
+                        bounce: 0,
+                        duration: 0
+                      }}
                       style={{ opacity: 1 }}
                       layoutId={pokemon.name + "-art"}
                       src={pokemon.sprites.other?.['official-artwork'].front_default} />
@@ -99,6 +110,12 @@ function ExpandableCards(props: Props) {
                     className='expandable-card__type'
                     initial={{ transform: "translate3d(0px,0px,0px)", translateX: 0 }}
                     animate={{ transform: "translate3d(0px,0px,0px)", translateX: 0 }}
+                    transition={{
+                      type: "spring",
+                      damping: 3,
+                      stiffness: 50,
+                      restDelta: 0.001
+                    }}
                     layoutId={pokemon.name + "-types"}>
                     {getPokemonTypes(pokemon.types)}
                   </motion.div>
@@ -108,13 +125,13 @@ function ExpandableCards(props: Props) {
                     animate={{ height: 120, opacity: 1 }}
                     transition={{ delay: 0.5, duration: 0.8 }}>
                     {StringUtils.cleanDescription(
-                      StringUtils.filterLanguage(pokemon.flavor_text_entries, "es").flavor_text)
+                      StringUtils.filterLanguage(pokemon.flavor_text_entries, props.language).flavor_text)
                     }
                   </motion.div>
                 </motion.li>
-              </AnimatePresence>
-            )
-          })}
+              )
+            })}
+          </AnimatePresence>
         </ul>
       }
     </LayoutGroup>
