@@ -5,6 +5,7 @@ import { BasicInfo, CustomPokemonType, FavPokemons } from './Utilities/pokemon/p
 import ExpandableCards from './Components/ExpandableCards/ExpandableCards';
 import SearchBar from './Components/searchBar/searchBar';
 import DropdownMenu from './Components/dropdownMenu/dropdownMenu';
+import ParticlesBackground from './Components/Particles/Particles';
 
 import { motion } from 'framer-motion';
 import { PokemonTypes } from './Utilities/pokemon/pokemonInfo';
@@ -168,10 +169,17 @@ function App() {
 
   return (
     <motion.div className="App">
+      <ParticlesBackground></ParticlesBackground>
       <header className='header'>
         <div className="logo__container">
           <div className="logo__glow"></div>
-          <img className='logo' alt='' src='Images/background/pokeball.svg'></img>
+          <motion.img
+            initial={{ opacity: 0 }}
+            animate={{ rotate: 360, opacity: 1 }}
+            transition={{ ease: "linear", duration: 95, repeat: Infinity, delay: 1.5, opacity: { delay: 1.5, duration: 1 } }}
+            className='logo'
+            alt=''
+            src='Images/background/pokeball2.png' />
         </div>
         <div style={{ marginTop: "150px" }}>
           <h1 style={{ fontSize: "50px", margin: "5px" }}> Poke-List </h1>
@@ -189,8 +197,8 @@ function App() {
         <DropdownMenu text='language' options={Object.entries(LanguageTypes).map(a => a[0])} onSelect={changeLanguage} />
         <DropdownMenu text='Generation' options={pokemonGenCount} onSelect={updateCurrentGeneration} />
         <DropdownMenu text='Type' options={Object.values(PokemonTypes)} icons nullValue="-" onSelect={setPokemonType} />
-        <CustomSwitch value={checked} onValueChange={handleChange} />
         <SearchBar text='Write pokemon name or ID' onSearch={setPokemonSearch} />
+        <CustomSwitch value={checked} text="Favorites" onValueChange={handleChange} />
       </nav>
       <motion.div>
         <ExpandableCards data={getFilteredPokemons()} onFav={onFavPokemon} favData={saveFavPokemons} language={language} />

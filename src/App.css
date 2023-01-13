@@ -38,8 +38,10 @@
 
 .logo__container {
   position: relative;
-  height: 300px;
-  width: 300px;
+  top: -25%;
+  left: -25%;
+  height: 950px;
+  width: 950px;
 }
 
 .header {
