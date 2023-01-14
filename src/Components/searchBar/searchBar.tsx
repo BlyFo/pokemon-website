@@ -28,6 +28,7 @@ export default function SearchBar(props: Props) {
       options={props.options ? props.options : []}
       sx={{
         width: 300,
+        minWidth: "220px",
         "& .MuiFormLabel-root": {
           color: "var(--color3)"
         }

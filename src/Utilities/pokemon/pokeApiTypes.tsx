@@ -111,6 +111,20 @@ export interface CustomPokemonType {
     flavor_text_entries: Array<pokemonLanguages>;
     form_descriptions: Array<{ description: string, language: BasicInfo }>;
     generation: number;
+    evolutions: Array<BasicInfo>;
+}
+
+export interface PokemonChain {
+    evolution_details: Array<unknown>;
+    evolves_to: Array<PokemonChain>;
+    is_baby: boolean;
+    species: BasicInfo
+}
+
+export interface PokemonEvoChain {
+    baby_trigger_item: unknown;
+    chain: PokemonChain;
+    id: number
 }
 
 export interface FavPokemons {

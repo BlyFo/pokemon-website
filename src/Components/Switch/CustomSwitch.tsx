@@ -10,7 +10,7 @@ interface Props {
 
 function CustomSwitch(props: Props) {
   return (
-    <div style={{ height: "50px", position: "relative" }}>
+    <div style={{ height: "50px", position: "relative", marginRight: "5px" }}>
       <p style={{ margin: 0, fontSize: "16px" }}>{props.text}</p>
       <Switch
         disableRipple

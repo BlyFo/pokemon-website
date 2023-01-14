@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BasicInfo, FullPokemonType, PokemonSpeciesType, CustomPokemonType } from "../Utilities/pokemon/pokeApiTypes";
+import { BasicInfo, FullPokemonType, PokemonSpeciesType, CustomPokemonType, PokemonEvoChain } from "../Utilities/pokemon/pokeApiTypes";
 import StringUtils from "../Utilities/stringUtils";
 const BASE_URL = "https://pokeapi.co/api/v2/";
 
@@ -24,6 +24,9 @@ export default class PokeApi {
     const res2 = await axios.get(pokemonSpecies.varieties[0].pokemon.url);
     const pokemonData = res2.data as FullPokemonType;
 
+
+    //const evolutionChain = await this.getPokemonEvolutionChain(pokemonSpecies);
+
     const customType: CustomPokemonType = {
       id: pokemonData.id,
       name: StringUtils.cleanPokemonName(pokemonData.name),
@@ -35,7 +38,8 @@ export default class PokeApi {
       names: pokemonSpecies.names,
       flavor_text_entries: pokemonSpecies.flavor_text_entries,
       form_descriptions: pokemonSpecies.form_descriptions,
-      generation: parseInt(pokemonSpecies.generation.url.split("/")[6])
+      generation: parseInt(pokemonSpecies.generation.url.split("/")[6]),
+      evolutions: []
     }
     return customType;
   }
@@ -47,6 +51,18 @@ export default class PokeApi {
       })
     )
     return fullList.sort((a, b) => a.id - b.id)
+  }
+
+  static async getPokemonEvolutionChain(pokemon: PokemonSpeciesType) {
+    const res = await axios.get(pokemon.evolution_chain.url);
+    const evolutionChain = res.data as PokemonEvoChain
+    let a = [];
+    let evolution = [evolutionChain.chain]
+    while (evolution.length > 0) {
+      a.push(evolution[0].species);
+      evolution = evolution[0].evolves_to
+    }
+    return a;
   }
 
   // fetch how many generations there are

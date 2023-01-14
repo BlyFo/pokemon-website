@@ -121,13 +121,20 @@ function ExpandableCards(props: Props) {
                   </motion.div>
                   <motion.div
                     className='expandable-card__description'
-                    initial={{ opacity: 0, height: 0, originY: 0 }}
-                    animate={{ height: 120, opacity: 1 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{ delay: 0.5, duration: 0.8 }}>
                     {StringUtils.cleanDescription(
                       StringUtils.filterLanguage(pokemon.flavor_text_entries, props.language).flavor_text)
                     }
                   </motion.div>
+                  <motion.h6
+                    className='expandable-card__id'
+                    initial={{ opacity: 0, height: 0, originY: 0 }}
+                    animate={{ height: 120, opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 0.8 }}>
+                    {"#" + pokemon.id}
+                  </motion.h6>
                 </motion.li>
               )
             })}

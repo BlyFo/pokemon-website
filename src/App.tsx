@@ -168,20 +168,21 @@ function App() {
   }
 
   return (
-    <motion.div className="App">
+    <div className="App">
       <ParticlesBackground></ParticlesBackground>
       <header className='header'>
-        <div className="logo__container">
-          <div className="logo__glow"></div>
-          <motion.img
-            initial={{ opacity: 0 }}
-            animate={{ rotate: 360, opacity: 1 }}
-            transition={{ ease: "linear", duration: 95, repeat: Infinity, delay: 1.5, opacity: { delay: 1.5, duration: 1 } }}
-            className='logo'
-            alt=''
-            src='Images/background/pokeball2.png' />
-        </div>
-        <div style={{ marginTop: "150px" }}>
+        {
+          <div className="logo__container">
+            <motion.img
+              initial={{ opacity: 0 }}
+              animate={{ rotate: 360, opacity: 1 }}
+              transition={{ ease: "linear", duration: 95, repeat: Infinity, delay: 1.5, opacity: { delay: 1.5, duration: 1 } }}
+              className='logo'
+              alt=''
+              src='Images/background/pokeball2.png' />
+          </div>
+        }
+        <div className='intro_text'>
           <h1 style={{ fontSize: "50px", margin: "5px" }}> Poke-List </h1>
           <h3 style={{ fontSize: "20px" }}> Webpage made with
             <a href='https://pokeapi.co/' target="_blank" rel="noopener noreferrer"> ¨PokeApi</a>
@@ -194,19 +195,19 @@ function App() {
         </div>
       </header>
       <nav className='nav-bar'>
-        <DropdownMenu text='language' options={Object.entries(LanguageTypes).map(a => a[0])} onSelect={changeLanguage} />
-        <DropdownMenu text='Generation' options={pokemonGenCount} onSelect={updateCurrentGeneration} />
-        <DropdownMenu text='Type' options={Object.values(PokemonTypes)} icons nullValue="-" onSelect={setPokemonType} />
+        <DropdownMenu text='language' style={{ minWidth: "120px" }} options={Object.entries(LanguageTypes).map(a => a[0])} onSelect={changeLanguage} />
+        <DropdownMenu text='Generation' style={{ minWidth: "150px" }} options={pokemonGenCount} onSelect={updateCurrentGeneration} />
+        <DropdownMenu text='Type' style={{ minWidth: "150px" }} options={Object.values(PokemonTypes)} icons nullValue="-" onSelect={setPokemonType} />
         <SearchBar text='Write pokemon name or ID' onSearch={setPokemonSearch} />
         <CustomSwitch value={checked} text="Favorites" onValueChange={handleChange} />
       </nav>
-      <motion.div>
+      <motion.div style={{ width: "100vw" }}>
         <ExpandableCards data={getFilteredPokemons()} onFav={onFavPokemon} favData={saveFavPokemons} language={language} />
         <div ref={endOfPokemonListRef} style={{ height: 200, width: "100%", background: "none", position: "relative" }} >
           {loading && <Loading />}
         </div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
 

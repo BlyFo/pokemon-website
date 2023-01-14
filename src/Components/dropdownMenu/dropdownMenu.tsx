@@ -16,7 +16,8 @@ interface Props {
 
 const selectStyle = {
   height: "35px",
-  width: "200px",
+  maxWidth: "200px",
+  width: "auto",
   color: "var(--color3)",
   display: "flex",
   justifyContent: "center",
@@ -68,7 +69,16 @@ export default function DropdownMenu(props: Props) {
 
   return (
     <div style={dropDownStyle}>
-      <InputLabel id="select-label" style={{ marginRight: "10px", userSelect: "none", color: "var(--color3)" }}>{props.text}</InputLabel>
+      <InputLabel
+        id="select-label"
+        sx={{
+          marginRight: "10px",
+          userSelect: "none",
+          color: "var(--color3)",
+          '@media (max-width: 1120px)': {
+            display: "none"
+          }
+        }}>{props.text}</InputLabel>
       <Select
         labelId="select-label"
         id="select"
@@ -80,7 +90,7 @@ export default function DropdownMenu(props: Props) {
           PaperProps: {
             sx: {
               maxHeight: 300,
-              minHeight: 200,
+              minHeight: 100,
               borderRadius: "10px",
               backgroundColor: "--var(color3)",
               marginTop: "5px",
@@ -97,7 +107,7 @@ export default function DropdownMenu(props: Props) {
             }
           }
         }}
-        sx={selectStyle}
+        sx={{ ...selectStyle, ...props.style }}
         onChange={(e) => handleChange(e)}>
         {getItems(props.options).map((option) => (
           <MenuItem key={option} value={option}>
